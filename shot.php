@@ -41,7 +41,7 @@ if (!is_dir($cache)) {
 
 $w = 1024;
 $h = 768;
-
+$quality = 80;
 if (isset($_REQUEST['w'])) {
     $w = intval($_REQUEST['w']);
 }
@@ -64,6 +64,9 @@ if(isset($_REQUEST['resolution'])){
   $cliph = $height;
   $clipw = $width;
 }
+if(isset($_REQUEST['quality'])){
+  $quality = intval($_REQUEST['quality']);
+}
 if (isset($_REQUEST['download'])) {
     $download = $_REQUEST['download'];
 }
@@ -77,7 +80,7 @@ $url = str_replace('<?', '', $url);
 $url = str_replace('\077', ' ', $url);
 $url = str_replace("^?", "?", $url);
 
-$screen_file = $url_segs['host'] . crc32($url) . '_' . $w . '_' . $h . '.jpg';
+$screen_file = $url_segs['host'] . crc32($url) . '_' . $w . '_' . $h . '_'. $quality .'.jpg';
 $cache_job = $cache . $screen_file;
 
 
@@ -108,7 +111,7 @@ if (!is_file($cache_job) or $refresh == true) {
     $src .= "
 
     page.open('{$url}', function () {
-        page.render('{$screen_file}',{format: 'PNG', quality: '100'});
+        page.render('{$screen_file}',{format: 'JPG', quality: '{$quality}'});
         phantom.exit();
     });
 

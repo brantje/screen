@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <title>Screenshot</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/bootswatch/2.3.2/spacelab/bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 
 <body>
+<div class="container">
 <form target="shot"  action="shot.php"  id="form" method="post">
 	<fieldset>
 		<legend>Take a screenshot</legend>
@@ -45,10 +47,15 @@
          <option value="2560x1600">2560x1600</option>
        </select>
     </div>
+     <div class="form-group">
+      <label for="quality">Quality</label>
+       <input type="range" min="0" max="100" name="quality">
+    </div>
+
 		<button type="submit" class="btn btn-default">Submit</button>
 	</fieldset>
 </form>
-<br>
+</div>
 <iframe src="shot.php" name="shot" id="shot" width="100%" height="1000" frameborder="0"></iframe>
 </body>
 </html>
