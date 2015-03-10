@@ -46,6 +46,7 @@
          <option value="2560x1440">2560x1440</option>
          <option value="2560x1600">2560x1600</option>
        </select>
+       <div id="r">[x]</div>
     </div>
      <div class="form-group">
       <label for="quality">Quality</label>
@@ -58,4 +59,12 @@
 </div>
 <iframe src="shot.php" name="shot" id="shot" width="100%" height="1000" frameborder="0"></iframe>
 </body>
+<script>
+  $(document).ready(function(){
+    $('#r').click(function(){
+      $(this).parent().remove();
+    });
+
+  })
+</script>
 </html>
