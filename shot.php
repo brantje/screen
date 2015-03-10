@@ -57,7 +57,13 @@ if (isset($_REQUEST['clipw'])) {
 if (isset($_REQUEST['cliph'])) {
     $cliph = intval($_REQUEST['cliph']);
 }
-
+if(isset($_REQUEST['resolution'])){
+  list($width,$height) = explode('x',$_REQUEST['resolution']);
+  $w = $width;
+  $h = $height;
+  $cliph = $height;
+  $clipw = $width;
+}
 if (isset($_REQUEST['download'])) {
     $download = $_REQUEST['download'];
 }
@@ -69,7 +75,7 @@ $url = str_replace('\'', '/', $url);
 $url = str_replace('<?', '', $url);
 $url = str_replace('<?', '', $url);
 $url = str_replace('\077', ' ', $url);
-
+$url = str_replace("^?", "?", $url);
 
 $screen_file = $url_segs['host'] . crc32($url) . '_' . $w . '_' . $h . '.jpg';
 $cache_job = $cache . $screen_file;
@@ -102,7 +108,7 @@ if (!is_file($cache_job) or $refresh == true) {
     $src .= "
 
     page.open('{$url}', function () {
-        page.render('{$screen_file}');
+        page.render('{$screen_file}',{format: 'PNG', quality: '100'});
         phantom.exit();
     });
 
@@ -112,7 +118,7 @@ if (!is_file($cache_job) or $refresh == true) {
     $job_file = $jobs . $url_segs['host'] . crc32($src) . '.js';
     file_put_contents($job_file, $src);
 
-    $exec = $bin_files . 'phantomjs ' . $job_file;
+    $exec = $bin_files . 'phantomjs --ignore-ssl-errors=yes ' . $job_file;
 
     $escaped_command = escapeshellcmd($exec);
 
